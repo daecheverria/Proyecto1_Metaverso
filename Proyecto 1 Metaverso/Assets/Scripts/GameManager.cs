@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int ptsTotal = 0;
     private List<GameObject> currentBricks = new List<GameObject>();
 
+    public Gradient gradient;
+
     public TextMeshProUGUI nivel;
     public TextMeshProUGUI pts;
     public TextMeshProUGUI vidas;
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
 
                 GameObject brickPrefab = ElegirBloque();
                 GameObject brick = Instantiate(brickPrefab, brickPosition, Quaternion.identity);
+                // Brick.GetComponent<SprinteRenderer>().color = gradient.Evaluate((float)j / (size.y-1));
                 currentBricks.Add(brick);
             }
         }
