@@ -11,14 +11,14 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        velocity.x = Random.Range(-1f,1f);
-        velocity.y = 1;
-        rigidBody2D.AddForce(velocity*speed);
+        StartCoroutine(Delay(0.5f));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Delay(float delay)
     {
-        
+        yield return new WaitForSeconds(delay); 
+        velocity.x = Random.Range(-1f, 1f);
+        velocity.y = 1;
+        rigidBody2D.AddForce(velocity * speed);
     }
 }
