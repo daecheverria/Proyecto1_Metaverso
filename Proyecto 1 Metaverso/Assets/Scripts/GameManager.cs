@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     public int ptsTotal = 0;
     private List<GameObject> currentBricks = new List<GameObject>();
 
-    public TextMeshPro nivel;
-    public TextMeshPro pts;
-    public TextMeshPro vidas;
+    public TextMeshProUGUI nivel;
+    public TextMeshProUGUI pts;
+    public TextMeshProUGUI vidas;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -40,16 +40,11 @@ public class GameManager : MonoBehaviour
     {
         if (scene.buildIndex == 1)
         {
-            StartCoroutine(WaitForUIElements());
+            GameObject ptsObject = GameObject.FindGameObjectWithTag("Puntuacion");
+            pts = ptsObject.GetComponent<TextMeshProUGUI>();
             GenerarNivel();
 
         }
-    }
-    IEnumerator WaitForUIElements()
-    {
-        yield return null;
-        GameObject ptsObject = GameObject.FindGameObjectWithTag("Puntuacion");
-        pts = ptsObject.GetComponent<TextMeshPro>();
     }
     void GenerarNivel()
     {
@@ -84,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         currentBricks.Remove(brick);
         ptsTotal += 10;
-        //pts.text = $"Puntos: {ptsTotal}";
+        pts.text = $"Puntos: {ptsTotal}";
         if (currentBricks.Count == 0)
         {
             Debug.Log("hola");
