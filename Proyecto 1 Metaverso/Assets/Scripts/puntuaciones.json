@@ -2,7 +2,16 @@
     "puntuaciones": [
       { "nombre": "Jugador1", "puntos": 150 },
       { "nombre": "Jugador2", "puntos": 120 },
-      { "nombre": "Jugador3", "puntos": 200 }
+      { "nombre": "Jugador3", "puntos": 200 },
+      { "nombre": "Jugador4", "puntos": 150 },
+      { "nombre": "Jugador5", "puntos": 120 },
+      { "nombre": "Jugador6", "puntos": 200 },
+      { "nombre": "Jugador7", "puntos": 150 },
+      { "nombre": "Jugador8", "puntos": 120 },
+      { "nombre": "Jugador9", "puntos": 200 },
+      { "nombre": "Jugador10", "puntos": 150 },
+      { "nombre": "Jugador12", "puntos": 120 },
+      { "nombre": "Jugador13", "puntos": 200 }
     ]
   }
   

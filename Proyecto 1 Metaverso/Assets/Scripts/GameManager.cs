@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public GameObject[] brickTypes;
+    public GameObject brickPrefab;
     public int rows = 5;
     public int columns = 10;
     public Vector2 startPosition;
@@ -19,11 +19,13 @@ public class GameManager : MonoBehaviour
     private List<GameObject> currentBricks = new List<GameObject>();
 
     public Gradient gradient;
+    public TablaClasificacion tabla;
 
     public TextMeshProUGUI nivel;
     public TextMeshProUGUI pts;
     public TextMeshProUGUI vidas;
     public string nombreJugador;
+    public Ball pelota;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -47,6 +49,13 @@ public class GameManager : MonoBehaviour
             pts = ptsObject.GetComponent<TextMeshProUGUI>();
             GameObject vidasObject = GameObject.FindGameObjectWithTag("Vidas");
             vidas = vidasObject.GetComponent<TextMeshProUGUI>();
+            GameObject nivelObject = GameObject.FindGameObjectWithTag("Nivel");
+            nivel = nivelObject.GetComponent<TextMeshProUGUI>();
+            GameObject pelotaObject = GameObject.FindGameObjectWithTag("Ball");
+            pelota = pelotaObject.GetComponent<Ball>();
+            ptsTotal = 0;
+            health = 3;
+            level = 0;
             GenerarNivel();
 
         }
@@ -54,6 +63,8 @@ public class GameManager : MonoBehaviour
     void GenerarNivel()
     {
         level++;
+        pelota.ResetBall();
+        nivel.text = $"Nivel: {level}";
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < columns; col++)
@@ -62,11 +73,11 @@ public class GameManager : MonoBehaviour
                     startPosition.x + col * brickSpacingX,
                     startPosition.y - row * brickSpacingY
                 );
-
-                GameObject brickPrefab = ElegirBloque();
                 GameObject brick = Instantiate(brickPrefab, brickPosition, Quaternion.identity);
-                float gradientValue = (float)row / (rows - 1); 
+                float gradientValue = (float)row / (rows - 1);
                 Color brickColor = gradient.Evaluate(gradientValue);
+                int vidaBloque = AsignarVida();
+                brick.GetComponent<Brick>().SetVida(vidaBloque);
                 brick.GetComponent<SpriteRenderer>().color = brickColor;
 
                 currentBricks.Add(brick);
@@ -74,16 +85,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    GameObject ElegirBloque()
+    int AsignarVida()
     {
-
-        if (level == 1)
+        if (level >= 1 && level <= 5)
         {
-            return brickTypes[0];
+            return Random.Range(1, 101) <= 80 ? 1 : (Random.Range(1, 101) <= 50 ? 2 : 3);
         }
-        int randomIndex = Random.Range(0, Mathf.Min(level, brickTypes.Length));
-        return brickTypes[randomIndex];
+        else if (level >= 6 && level <= 10)
+        {
+            return Random.Range(1, 101) <= 50 ? 1 : (Random.Range(1, 101) <= 70 ? 2 : 3);
+        }
+        else
+        {
+            return Random.Range(1, 101) <= 30 ? 1 : (Random.Range(1, 101) <= 50 ? 2 : 3);
+        }
     }
+
     public void BlockDestroyed(GameObject brick)
     {
         currentBricks.Remove(brick);
@@ -91,15 +108,21 @@ public class GameManager : MonoBehaviour
         pts.text = $"Puntos: {ptsTotal}";
         if (currentBricks.Count == 0)
         {
-            Debug.Log("hola");
+            GenerarNivel();
         }
     }
-    public void BajarVidas(){
+    public void BajarVidas()
+    {
         health--;
         vidas.text = $"Vidas: {health}";
-        if(health==0){
+        if (health == 0)
+        {
             Debug.Log("Moriste");
-            //terminar();
+            GameOver();
         }
+    }
+    public void GameOver(){
+        tabla.GuardarSiEsSuperior();
+        SceneManager.LoadScene(0);
     }
 }

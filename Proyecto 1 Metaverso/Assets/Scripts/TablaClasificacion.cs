@@ -56,4 +56,52 @@ public class TablaClasificacion : MonoBehaviour
         LeerPuntuaciones();
         MostrarPuntuaciones();
     }
+    
+    public void GuardarSiEsSuperior()
+    {
+        if (tablaPuntuaciones.puntuaciones.Count < 10) 
+        {
+            AgregarPuntuacion();
+        }
+        else
+        {
+            Puntuacion lowestScore = tablaPuntuaciones.puntuaciones[0];
+            foreach (var puntos in tablaPuntuaciones.puntuaciones)
+            {
+                if (puntos.puntos < lowestScore.puntos)
+                {
+                    lowestScore = puntos;
+                }
+            }
+            if (GameManager.instance.ptsTotal > lowestScore.puntos)
+            {
+                // Reemplazar la puntuación más baja
+                tablaPuntuaciones.puntuaciones.Remove(lowestScore);
+                AgregarPuntuacion();
+            }
+        }
+    }
+
+    void AgregarPuntuacion()
+    {
+        Puntuacion newScore = new Puntuacion();
+        newScore.nombre = GameManager.instance.nombreJugador;
+        newScore.puntos = GameManager.instance.ptsTotal;
+        tablaPuntuaciones.puntuaciones.Add(newScore);
+
+        tablaPuntuaciones.puntuaciones.Sort((x, y) => y.puntos.CompareTo(x.puntos));
+
+        if (tablaPuntuaciones.puntuaciones.Count > 10)
+        {
+            tablaPuntuaciones.puntuaciones.RemoveAt(tablaPuntuaciones.puntuaciones.Count - 1);
+        }
+
+        GuardarPuntuaciones();
+    }
+    void GuardarPuntuaciones()
+{
+    string json = JsonUtility.ToJson(tablaPuntuaciones, true);
+    string filePath = Path.Combine(Application.persistentDataPath, rutaJSON);
+    File.WriteAllText(filePath, json);
+}
 }
