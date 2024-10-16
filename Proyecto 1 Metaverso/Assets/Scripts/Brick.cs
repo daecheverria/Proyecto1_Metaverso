@@ -7,6 +7,8 @@ public class Brick : MonoBehaviour
     void Start()
     {
         ActualizarCapas();
+        Color colorActual = GetComponent<SpriteRenderer>().color;
+        capas[1].GetComponent<SpriteRenderer>().color = colorActual;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

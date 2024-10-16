@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI nivel;
     public TextMeshProUGUI pts;
     public TextMeshProUGUI vidas;
+    public string nombreJugador;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -62,7 +63,10 @@ public class GameManager : MonoBehaviour
 
                 GameObject brickPrefab = ElegirBloque();
                 GameObject brick = Instantiate(brickPrefab, brickPosition, Quaternion.identity);
-                // Brick.GetComponent<SprinteRenderer>().color = gradient.Evaluate((float)j / (size.y-1));
+                float gradientValue = (float)row / (rows - 1); 
+                Color brickColor = gradient.Evaluate(gradientValue);
+                brick.GetComponent<SpriteRenderer>().color = brickColor;
+
                 currentBricks.Add(brick);
             }
         }
