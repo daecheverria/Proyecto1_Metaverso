@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     public float speed = 300;
     private Vector2 velocity;
     Vector2 startPosition;
+    public AudioSource AudioBall;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        AudioBall.Play();
         if (collision.gameObject.CompareTag("DeadZone"))
         {
             GameManager.instance.BajarVidas();
