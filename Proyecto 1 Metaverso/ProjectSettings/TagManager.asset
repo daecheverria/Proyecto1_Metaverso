@@ -8,6 +8,7 @@ TagManager:
   - NIvel
   - Puntuacion
   - Vidas
+  - DeadZone
   layers:
   - Default
   - TransparentFX
