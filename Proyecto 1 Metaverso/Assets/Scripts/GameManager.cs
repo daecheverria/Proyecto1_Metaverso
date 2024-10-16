@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
         {
             GameObject ptsObject = GameObject.FindGameObjectWithTag("Puntuacion");
             pts = ptsObject.GetComponent<TextMeshProUGUI>();
+            GameObject vidasObject = GameObject.FindGameObjectWithTag("Vidas");
+            vidas = vidasObject.GetComponent<TextMeshProUGUI>();
             GenerarNivel();
 
         }
@@ -90,6 +92,14 @@ public class GameManager : MonoBehaviour
         if (currentBricks.Count == 0)
         {
             Debug.Log("hola");
+        }
+    }
+    public void BajarVidas(){
+        health--;
+        vidas.text = $"Vidas: {health}";
+        if(health==0){
+            Debug.Log("Moriste");
+            //terminar();
         }
     }
 }

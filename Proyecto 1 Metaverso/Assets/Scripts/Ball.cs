@@ -28,6 +28,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("DeadZone"))
         {
+            GameManager.instance.BajarVidas();
             ResetBall();
         }
     }
