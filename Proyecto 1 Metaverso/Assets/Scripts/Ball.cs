@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public Rigidbody2D rigidBody2D;
-    public float speed = 300;
+    public float speed = 10f;
     private Vector2 velocity;
     Vector2 startPosition;
     public AudioSource AudioBall;
@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 10f;
         startPosition = transform.position;
         StartCoroutine(Delay(0.5f));
     }
@@ -22,11 +23,12 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(delay); 
         velocity.x = Random.Range(-1f, 1f);
         velocity.y = 1;
-        rigidBody2D.AddForce(velocity * speed);
+        rigidBody2D.velocity = velocity.normalized * speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        rigidBody2D.velocity = rigidBody2D.velocity.normalized * speed;
         AudioBall.Play();
         if (collision.gameObject.CompareTag("DeadZone"))
         {
@@ -37,7 +39,7 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
-        transform.position = startPosition;
+        transform.position = new Vector2(0,-3.5f);
         rigidBody2D.velocity = Vector2.zero;
         StartCoroutine(Delay(0.5f));
     }
