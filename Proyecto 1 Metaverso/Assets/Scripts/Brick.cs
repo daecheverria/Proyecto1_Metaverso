@@ -10,7 +10,10 @@ public class Brick : MonoBehaviour
         Color colorActual = GetComponent<SpriteRenderer>().color;
         capas[1].GetComponent<SpriteRenderer>().color = colorActual;
     }
-
+    public void SetVida(int nuevaVida)
+    {
+        vidas = nuevaVida;
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
