@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 
     {
+        if(scene.buildIndex == 0 && ptsTotal!=0){
+        tabla = gameObject.GetComponent<TablaClasificacion>();
+        tabla.GuardarSiEsSuperior();
+        }
         if (scene.buildIndex == 1)
         {
             GameObject ptsObject = GameObject.FindGameObjectWithTag("Puntuacion");
@@ -122,7 +126,6 @@ public class GameManager : MonoBehaviour
         }
     }
     public void GameOver(){
-        tabla.GuardarSiEsSuperior();
         SceneManager.LoadScene(0);
     }
 }

@@ -18,14 +18,14 @@ public class TablaPuntuaciones
 
 public class TablaClasificacion : MonoBehaviour
 {
-    public TextMeshProUGUI tablaTexto; 
+    public TextMeshProUGUI tablaTexto;
 
-    private string rutaJSON = "Assets/Scripts/puntuaciones.json"; 
+    private string rutaJSON;
     private TablaPuntuaciones tablaPuntuaciones;
 
     void Start()
     {
-        
+        rutaJSON = Path.Combine(Application.persistentDataPath, "puntuaciones.json");
     }
 
 
@@ -38,12 +38,17 @@ public class TablaClasificacion : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Archivo JSON no encontrado: " + rutaJSON);
+            tablaPuntuaciones = new TablaPuntuaciones();
+            tablaPuntuaciones.puntuaciones = new List<Puntuacion>();
+            GuardarPuntuaciones();
         }
     }
 
-    void MostrarPuntuaciones()
+    public void MostrarPuntuaciones()
     {
+        LeerPuntuaciones();
+        GameObject ptsObject = GameObject.FindGameObjectWithTag("Panel");
+        tablaTexto = ptsObject.GetComponent<TextMeshProUGUI>();
         tablaPuntuaciones.puntuaciones.Sort((a, b) => b.puntos.CompareTo(a.puntos));
         string textoTabla = "Top 10 Puntuaciones:\n";
         for (int i = 0; i < Mathf.Min(10, tablaPuntuaciones.puntuaciones.Count); i++)
@@ -52,14 +57,11 @@ public class TablaClasificacion : MonoBehaviour
         }
         tablaTexto.text = textoTabla;
     }
-    void OnEnable(){ 
-        LeerPuntuaciones();
-        MostrarPuntuaciones();
-    }
-    
+
+
     public void GuardarSiEsSuperior()
     {
-        if (tablaPuntuaciones.puntuaciones.Count < 10) 
+        if (tablaPuntuaciones.puntuaciones.Count < 10)
         {
             AgregarPuntuacion();
         }
@@ -99,9 +101,9 @@ public class TablaClasificacion : MonoBehaviour
         GuardarPuntuaciones();
     }
     void GuardarPuntuaciones()
-{
-    string json = JsonUtility.ToJson(tablaPuntuaciones, true);
-    string filePath = Path.Combine(Application.persistentDataPath, rutaJSON);
-    File.WriteAllText(filePath, json);
-}
+    {
+        string json = JsonUtility.ToJson(tablaPuntuaciones, true);
+        string filePath = Path.Combine(Application.persistentDataPath, rutaJSON);
+        File.WriteAllText(filePath, json);
+    }
 }

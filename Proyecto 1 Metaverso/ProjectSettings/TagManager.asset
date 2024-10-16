@@ -9,6 +9,7 @@ TagManager:
   - Vidas
   - DeadZone
   - Nivel
+  - Panel
   layers:
   - Default
   - TransparentFX
