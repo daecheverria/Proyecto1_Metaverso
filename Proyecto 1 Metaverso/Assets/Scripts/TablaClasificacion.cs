@@ -26,6 +26,8 @@ public class TablaClasificacion : MonoBehaviour
     void Start()
     {
         rutaJSON = Path.Combine(Application.persistentDataPath, "puntuaciones.json");
+        
+        LeerPuntuaciones();
     }
 
 
@@ -103,7 +105,7 @@ public class TablaClasificacion : MonoBehaviour
     void GuardarPuntuaciones()
     {
         string json = JsonUtility.ToJson(tablaPuntuaciones, true);
-        string filePath = Path.Combine(Application.persistentDataPath, rutaJSON);
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(rutaJSON, json); 
     }
+
 }
