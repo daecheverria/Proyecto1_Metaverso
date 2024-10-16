@@ -1778,6 +1778,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5652262718973145715, guid: 023bcf55d36b99f4ba05680b18b4f4f4, type: 3}
+      propertyPath: tabla
+      value: 
+      objectReference: {fileID: 2024512112}
+    - target: {fileID: 5652262718973145715, guid: 023bcf55d36b99f4ba05680b18b4f4f4, type: 3}
       propertyPath: gradient.key0.g
       value: 0
       objectReference: {fileID: 0}
