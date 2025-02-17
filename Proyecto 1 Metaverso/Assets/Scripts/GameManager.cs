@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
             ptsTotal = 0;
             health = 3;
             level = 0;
+            currentBricks.Clear();
             GenerarNivel();
 
         }
